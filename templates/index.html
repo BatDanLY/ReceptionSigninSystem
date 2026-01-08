@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Kiosk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #0391FF;
+            --bg: #CBD1DD;
+            --surface: #EFEFF3;
+            --text: #1a1a1a;
+            --text-secondary: #666666;
+            --border: #d1d9e6;
+            --success: #10b981;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        [data-theme="dark"] {
+            --bg: #1a1a1a;
+            --surface: #2d2d2d;
+            --text: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border: #404040;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .header {
+            padding: 3rem 2rem;
+            text-align: center;
+            background: var(--bg);
+        }
+
+        .logo-banner {
+            max-width: 800px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .form-container {
+            width: 100%;
+            background: var(--surface);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-view {
+            display: none;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .form-view.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .logo-small {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            display: block;
+            border-radius: 12px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--text);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(3, 145, 255, 0.1);
+        }
+
+        .autocomplete-suggestion {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg);
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 12px var(--shadow);
+            cursor: pointer;
+            z-index: 10;
+            animation: fadeIn 0.2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .autocomplete-suggestion:hover {
+            background: var(--surface);
+        }
+
+        .suggestion-name {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .suggestion-details {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: var(--accent);
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            background: var(--accent);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(3, 145, 255, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            background: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .success-message h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .success-message p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .mode-slider {
+            display: flex;
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 0.5rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .slider-option {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slider-option.active {
+            color: white;
+        }
+
+        .slider-background {
+            position: absolute;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: calc(50% - 0.5rem);
+            background: var(--accent);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            left: 0.5rem;
+        }
+
+        .slider-background.signout {
+            transform: translateX(100%);
+        }
+
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='logo-banner.png') }}" alt="Company Logo" class="logo-banner" 
+             onerror="this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.style.padding='2rem';">
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="container">
+        <div class="form-container">
+            <!-- Sign In Form -->
+            <div id="signinForm" class="form-view active">
+                <img src="{{ url_for('static', filename='logo-square.png') }}" alt="Company Logo" class="logo-small"
+                     onerror="this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.style.padding='1rem';">
+                <h2>Welcome!</h2>
+                <form id="signinFormElement" onsubmit="handleSignIn(event)">
+                    <div class="form-group">
+                        <label for="signinName">Full Name *</label>
+                        <input type="text" id="signinName" oninput="checkSigninAutocomplete()" required>
+                        <div id="signinSuggestion"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signinCompany">Company *</label>
+                        <input type="text" id="signinCompany" oninput="checkSigninAutocomplete()" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signinEmail">Email Address *</label>
+                        <input type="email" id="signinEmail" oninput="checkSigninAutocomplete()" required>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I accept the terms and conditions and privacy policy</label>
+                    </div>
+                    <button type="submit" class="submit-btn">Sign In</button>
+                </form>
+            </div>
+
+            <!-- Sign Out Form -->
+            <div id="signoutForm" class="form-view">
+                <img src="{{ url_for('static', filename='logo-square.png') }}" alt="Company Logo" class="logo-small"
+                     onerror="this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.style.padding='1rem';">
+                <h2>Sign Out</h2>
+                <form id="signoutFormElement" onsubmit="handleSignOut(event)">
+                    <div class="form-group">
+                        <label for="signoutIdentifier">Name or Email Address *</label>
+                        <input type="text" id="signoutIdentifier" oninput="checkSignoutAutocomplete()" required placeholder="Enter your name or email">
+                        <div id="signoutSuggestion"></div>
+                    </div>
+                    <button type="submit" class="submit-btn">Sign Out</button>
+                </form>
+            </div>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="success-message">
+                <div class="success-icon">✓</div>
+                <h3 id="successTitle">Success!</h3>
+                <p id="successText">You have been signed in successfully.</p>
+            </div>
+
+            <!-- Mode Slider -->
+            <div class="mode-slider">
+                <div class="slider-background" id="sliderBg"></div>
+                <div class="slider-option active" onclick="switchMode('signin')">Sign In</div>
+                <div class="slider-option" onclick="switchMode('signout')">Sign Out</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>For assistance, please contact reception</p>
+    </div>
+
+    <script>
+        let currentMode = 'signin';
+        let selectedSuggestion = null;
+        let debounceTimeout = null;
+        let idleTimer = null;
+        const IDLE_TIMEOUT = 60000; // 60 seconds of inactivity
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(clearAllFields, IDLE_TIMEOUT);
+        }
+
+        function clearAllFields() {
+            document.getElementById('signinFormElement').reset();
+            document.getElementById('signoutFormElement').reset();
+            document.getElementById('signinSuggestion').innerHTML = '';
+            document.getElementById('signoutSuggestion').innerHTML = '';
+            selectedSuggestion = null;
+
+            // Optionally return to Sign In mode if inactive
+            if (currentMode !== 'signin') {
+                switchMode('signin');
+            }
+        }
+
+        // Listen for activity to reset the idle timer
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(name => {
+            document.addEventListener(name, resetIdleTimer, true);
+        });
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                icon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                icon.textContent = '☀️';
+            }
+        }
+
+        function switchMode(mode) {
+            if (mode === currentMode) return;
+
+            // Clear fields when manually switching modes
+            clearAllFields();
+
+            currentMode = mode;
+            const sliderBg = document.getElementById('sliderBg');
+            const options = document.querySelectorAll('.slider-option');
+            const forms = document.querySelectorAll('.form-view');
+            const success = document.getElementById('successMessage');
+
+            // Hide everything first
+            success.classList.remove('active');
+            forms.forEach(form => form.classList.remove('active'));
+            options.forEach(opt => opt.classList.remove('active'));
+
+            if (mode === 'signout') {
+                sliderBg.classList.add('signout');
+                options[1].classList.add('active');
+            } else {
+                sliderBg.classList.remove('signout');
+                options[0].classList.add('active');
+            }
+
+            document.getElementById(mode + 'Form').classList.add('active');
+        }
+
+        async function checkSigninAutocomplete() {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(async () => {
+                const name = document.getElementById('signinName').value;
+                const company = document.getElementById('signinCompany').value;
+                const email = document.getElementById('signinEmail').value;
+                
+                const response = await fetch('/api/autocomplete_signin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, company, email })
+                });
+                
+                const data = await response.json();
+                const suggestionDiv = document.getElementById('signinSuggestion');
+                
+                if (data.suggestion) {
+                    selectedSuggestion = data.suggestion;
+                    suggestionDiv.innerHTML = `
+                        <div class="autocomplete-suggestion" onclick="fillSigninForm()">
+                            <div class="suggestion-name">${data.suggestion.name}</div>
+                            <div class="suggestion-details">${data.suggestion.company} • ${data.suggestion.email}</div>
+                        </div>
+                    `;
+                } else {
+                    suggestionDiv.innerHTML = '';
+                    selectedSuggestion = null;
+                }
+            }, 300);
+        }
+
+        function fillSigninForm() {
+            if (selectedSuggestion) {
+                document.getElementById('signinName').value = selectedSuggestion.name;
+                document.getElementById('signinCompany').value = selectedSuggestion.company;
+                document.getElementById('signinEmail').value = selectedSuggestion.email;
+                document.getElementById('signinSuggestion').innerHTML = '';
+                selectedSuggestion = null;
+            }
+        }
+
+        async function checkSignoutAutocomplete() {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(async () => {
+                const identifier = document.getElementById('signoutIdentifier').value;
+                
+                const response = await fetch('/api/autocomplete_signout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ identifier })
+                });
+                
+                const data = await response.json();
+                const suggestionDiv = document.getElementById('signoutSuggestion');
+                
+                if (data.suggestion) {
+                    selectedSuggestion = data.suggestion;
+                    suggestionDiv.innerHTML = `
+                        <div class="autocomplete-suggestion" onclick="fillSignoutForm()">
+                            <div class="suggestion-name">${data.suggestion.name}</div>
+                            <div class="suggestion-details">${data.suggestion.email}</div>
+                        </div>
+                    `;
+                } else {
+                    suggestionDiv.innerHTML = '';
+                    selectedSuggestion = null;
+                }
+            }, 300);
+        }
+
+        function fillSignoutForm() {
+            if (selectedSuggestion) {
+                document.getElementById('signoutIdentifier').value = selectedSuggestion.email;
+                document.getElementById('signoutSuggestion').innerHTML = '';
+            }
+        }
+
+        async function handleSignIn(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('signinName').value;
+            const company = document.getElementById('signinCompany').value;
+            const email = document.getElementById('signinEmail').value;
+            
+            const response = await fetch('/api/sign_in', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, company, email })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                document.getElementById('signinForm').classList.remove('active');
+                const success = document.getElementById('successMessage');
+                document.getElementById('successTitle').textContent = `Welcome, ${name}!`;
+                document.getElementById('successText').textContent = 'You have been signed in successfully.';
+                success.classList.add('active');
+                
+                setTimeout(() => {
+                    if (currentMode === 'signin') {
+                        success.classList.remove('active');
+                        document.getElementById('signinFormElement').reset();
+                        document.getElementById('signinSuggestion').innerHTML = '';
+                        document.getElementById('signinForm').classList.add('active');
+                    }
+                }, 3000);
+            }
+        }
+
+        async function handleSignOut(e) {
+            e.preventDefault();
+            
+            const identifier = document.getElementById('signoutIdentifier').value;
+            
+            const response = await fetch('/api/sign_out', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ identifier })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                document.getElementById('signoutForm').classList.remove('active');
+                const success = document.getElementById('successMessage');
+                document.getElementById('successTitle').textContent = 'Signed Out';
+                document.getElementById('successText').textContent = `Thank you for visiting, ${data.user.name}. Have a great day!`;
+                success.classList.add('active');
+                
+                setTimeout(() => {
+                    if (currentMode === 'signout') {
+                        success.classList.remove('active');
+                        document.getElementById('signoutFormElement').reset();
+                        document.getElementById('signoutSuggestion').innerHTML = '';
+                        document.getElementById('signoutForm').classList.add('active');
+                    }
+                }, 3000);
+            } else {
+                alert('User not found in currently signed in list.');
+            }
+        }
+
+        // Auto-detect system theme preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeIcon').textContent = '☀️';
+        }
+
+        // Initialize idle timer
+        resetIdleTimer();
+
+    </script>
+</body>
+</html>
