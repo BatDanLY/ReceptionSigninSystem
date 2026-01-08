@@ -1,12 +1,12 @@
 # app.py
 from flask import Flask, render_template, request, jsonify
+from flask_apscheduler import APScheduler
 import json
 import os
 from datetime import datetime
-from apscheduler.schedulers.background import BackgroundScheduler
-import atexit
 
 app = Flask(__name__)
+scheduler = APScheduler()
 
 # File paths for JSON storage
 ALL_USERS_FILE = 'all_users.json'
@@ -58,6 +58,11 @@ def sign_in_user(name, company, email):
     all_users = load_all_users()
     currently_signed_in = load_currently_signed_in()
 
+    # Check if user is already signed in
+    already_signed_in = next((u for u in currently_signed_in if u['email'].lower() == email.lower()), None)
+    if already_signed_in:
+        return None
+
     # Check if a user exists in all users, if not add them
     existing_user = next((u for u in all_users if u['email'].lower() == email.lower()), None)
     if not existing_user:
@@ -68,7 +73,6 @@ def sign_in_user(name, company, email):
         })
         save_all_users(all_users)
 
-    # Add to currently sign in with timestamp
     user_signin = {
         'name': name,
         'company': company,
@@ -113,18 +117,24 @@ def get_all_users():
     return load_all_users()
 
 
-
 # Routes
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
+@app.route('/current')
+def currentSignin():
+
+    return render_template('current.html', signedIn=get_currently_signed_in())
+
 @app.route('/api/sign_in', methods=['POST'])
 def api_sign_in():
     data = request.json
     user = sign_in_user(data['name'], data['company'], data['email'])
-    return jsonify({'success': True, 'user': user})
+    if user:
+        return jsonify({'success': True, 'user': user})
+    return jsonify({'success': False, 'error': 'User is already signed in'}), 400
 
 
 @app.route('/api/sign_out', methods=['POST'])
@@ -148,11 +158,10 @@ def api_get_users():
 def api_autocomplete_signin():
     data = request.json
     name = data.get('name', '').lower()
-    company = data.get('company', '').lower()
     email = data.get('email', '').lower()
 
     # Need at least 3 characters in one field
-    if len(name) < 3 and len(company) < 3 and len(email) < 3:
+    if len(name) < 3 and len(email) < 3:
         return jsonify({'suggestion': None})
 
     all_users = get_all_users()
@@ -160,10 +169,9 @@ def api_autocomplete_signin():
 
     for user in all_users:
         name_match = name and name in user['name'].lower()
-        company_match = company and company in user['company'].lower()
         email_match = email and email in user['email'].lower()
 
-        if name_match or company_match or email_match:
+        if name_match or email_match:
             matches.append(user)
 
     # Only return if exactly one match
@@ -194,6 +202,18 @@ def api_autocomplete_signout():
 
 if __name__ == '__main__':
     init_files()
+
+    # Configure the scheduler
+    app.config['SCHEDULER_API_ENABLED'] = True
+    scheduler.init_app(app)
+
+    # Add the job: run every day at 00:00 (midnight)
+    @scheduler.task('cron', id='do_sign_out_all_users', hour=20, minute=32)
+    def scheduled_sign_out():
+        with app.app_context():
+            sign_out_all_users()
+
+    scheduler.start()
 
     app.run(debug=True, host='0.0.0.0', port=5000)
 

@@ -45,6 +45,7 @@
             padding: 3rem 2rem;
             text-align: center;
             background: var(--bg);
+            display: none;
         }
 
         .logo-banner {
@@ -83,54 +84,69 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            max-width: 600px;
+            padding: 1rem;
+            max-width: 650px;
             margin: 0 auto;
-            width: 100%;
+            width: 95%;
         }
 
         .form-container {
             width: 100%;
             background: var(--surface);
-            padding: 3rem;
+            padding: 2.5rem;
             border-radius: 20px;
             box-shadow: 0 8px 32px var(--shadow);
             position: relative;
             overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .form-view {
             display: none;
-            animation: slideIn 0.4s ease-out;
+            width: 100%;
         }
 
         .form-view.active {
             display: block;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-right {
+            animation: slideInRight 0.4s ease-out forwards;
+        }
+
+        .slide-left {
+            animation: slideInLeft 0.4s ease-out forwards;
         }
 
         .logo-small {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 2rem;
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            margin: 0 auto 1.5rem;
             display: block;
             border-radius: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            padding-bottom: 1.5rem;
+        }
+
+        [data-theme="dark"] .logo-small {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
             color: var(--text);
         }
 
@@ -144,12 +160,13 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: var(--text-secondary);
+            font-size: 1rem;
         }
 
         input[type="text"],
         input[type="email"] {
             width: 100%;
-            padding: 1rem;
+            padding: 0.8rem;
             border: 2px solid var(--border);
             border-radius: 10px;
             font-size: 1rem;
@@ -219,13 +236,13 @@
         .checkbox-group label {
             margin: 0;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .submit-btn {
             width: 100%;
-            padding: 1.2rem;
-            font-size: 1.2rem;
+            padding: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             border: none;
             border-radius: 12px;
@@ -341,7 +358,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="{{ url_for('static', filename='logo-banner.png') }}" alt="Company Logo" class="logo-banner" 
+        <img src="{{ url_for('static', filename='logo-banner.png') }}" alt="Company Logo" class="logo-banner"
              onerror="this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.style.padding='2rem';">
     </div>
 
@@ -353,7 +370,7 @@
         <div class="form-container">
             <!-- Sign In Form -->
             <div id="signinForm" class="form-view active">
-                <img src="{{ url_for('static', filename='logo-square.png') }}" alt="Company Logo" class="logo-small"
+                <img src="{{ url_for('static', filename='logo-banner.png') }}" alt="Company Logo" class="logo-small"
                      onerror="this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.style.padding='1rem';">
                 <h2>Welcome!</h2>
                 <form id="signinFormElement" onsubmit="handleSignIn(event)">
@@ -380,7 +397,7 @@
 
             <!-- Sign Out Form -->
             <div id="signoutForm" class="form-view">
-                <img src="{{ url_for('static', filename='logo-square.png') }}" alt="Company Logo" class="logo-small"
+                <img src="{{ url_for('static', filename='logo-banner.png') }}" alt="Company Logo" class="logo-small"
                      onerror="this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.style.padding='1rem';">
                 <h2>Sign Out</h2>
                 <form id="signoutFormElement" onsubmit="handleSignOut(event)">
@@ -447,7 +464,7 @@
             const html = document.documentElement;
             const icon = document.getElementById('themeIcon');
             const currentTheme = html.getAttribute('data-theme');
-            
+
             if (currentTheme === 'dark') {
                 html.removeAttribute('data-theme');
                 icon.textContent = '🌙';
@@ -460,18 +477,32 @@
         function switchMode(mode) {
             if (mode === currentMode) return;
 
-            // Clear fields when manually switching modes
-            clearAllFields();
-
+            const oldMode = currentMode;
             currentMode = mode;
+
+            // Determine animation direction
+            const animationClass = mode === 'signout' ? 'slide-right' : 'slide-left';
+
+            // Clear fields
+            const signinFormEl = document.getElementById('signinFormElement');
+            const signoutFormEl = document.getElementById('signoutFormElement');
+            if(signinFormEl) signinFormEl.reset();
+            if(signoutFormEl) signoutFormEl.reset();
+
+            document.getElementById('signinSuggestion').innerHTML = '';
+            document.getElementById('signoutSuggestion').innerHTML = '';
+            selectedSuggestion = null;
+
             const sliderBg = document.getElementById('sliderBg');
             const options = document.querySelectorAll('.slider-option');
             const forms = document.querySelectorAll('.form-view');
             const success = document.getElementById('successMessage');
 
-            // Hide everything first
+            // UI Updates
             success.classList.remove('active');
-            forms.forEach(form => form.classList.remove('active'));
+            forms.forEach(form => {
+                form.classList.remove('active', 'slide-left', 'slide-right');
+            });
             options.forEach(opt => opt.classList.remove('active'));
 
             if (mode === 'signout') {
@@ -482,7 +513,8 @@
                 options[0].classList.add('active');
             }
 
-            document.getElementById(mode + 'Form').classList.add('active');
+            const activeForm = document.getElementById(mode + 'Form');
+            activeForm.classList.add('active', animationClass);
         }
 
         async function checkSigninAutocomplete() {
@@ -491,16 +523,16 @@
                 const name = document.getElementById('signinName').value;
                 const company = document.getElementById('signinCompany').value;
                 const email = document.getElementById('signinEmail').value;
-                
+
                 const response = await fetch('/api/autocomplete_signin', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, company, email })
                 });
-                
+
                 const data = await response.json();
                 const suggestionDiv = document.getElementById('signinSuggestion');
-                
+
                 if (data.suggestion) {
                     selectedSuggestion = data.suggestion;
                     suggestionDiv.innerHTML = `
@@ -530,16 +562,16 @@
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(async () => {
                 const identifier = document.getElementById('signoutIdentifier').value;
-                
+
                 const response = await fetch('/api/autocomplete_signout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ identifier })
                 });
-                
+
                 const data = await response.json();
                 const suggestionDiv = document.getElementById('signoutSuggestion');
-                
+
                 if (data.suggestion) {
                     selectedSuggestion = data.suggestion;
                     suggestionDiv.innerHTML = `
@@ -564,26 +596,26 @@
 
         async function handleSignIn(e) {
             e.preventDefault();
-            
+
             const name = document.getElementById('signinName').value;
             const company = document.getElementById('signinCompany').value;
             const email = document.getElementById('signinEmail').value;
-            
+
             const response = await fetch('/api/sign_in', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, company, email })
             });
-            
+
             const data = await response.json();
-            
+
             if (data.success) {
                 document.getElementById('signinForm').classList.remove('active');
                 const success = document.getElementById('successMessage');
                 document.getElementById('successTitle').textContent = `Welcome, ${name}!`;
                 document.getElementById('successText').textContent = 'You have been signed in successfully.';
                 success.classList.add('active');
-                
+
                 setTimeout(() => {
                     if (currentMode === 'signin') {
                         success.classList.remove('active');
@@ -592,29 +624,31 @@
                         document.getElementById('signinForm').classList.add('active');
                     }
                 }, 3000);
+            } else {
+                alert(data.error || 'Sign in failed.');
             }
         }
 
         async function handleSignOut(e) {
             e.preventDefault();
-            
+
             const identifier = document.getElementById('signoutIdentifier').value;
-            
+
             const response = await fetch('/api/sign_out', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ identifier })
             });
-            
+
             const data = await response.json();
-            
+
             if (data.success) {
                 document.getElementById('signoutForm').classList.remove('active');
                 const success = document.getElementById('successMessage');
                 document.getElementById('successTitle').textContent = 'Signed Out';
                 document.getElementById('successText').textContent = `Thank you for visiting, ${data.user.name}. Have a great day!`;
                 success.classList.add('active');
-                
+
                 setTimeout(() => {
                     if (currentMode === 'signout') {
                         success.classList.remove('active');
