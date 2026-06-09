@@ -1,17 +1,17 @@
 [
   {
+    "name": "John Smith",
+    "company": "CoolBuiness21",
+    "email": "johnsmith123@gmail.com"
+  },
+  {
+    "name": "Viktor Yungs",
+    "company": "YungsLtd",
+    "email": "vikyungs6@icloud.com"
+  },
+  {
     "name": "Daniel Cowley",
-    "company": "Holscot",
+    "company": "TestCompany",
     "email": "mr.danieljcowley@gmail.com"
-  },
-  {
-    "name": "Grace Cullen",
-    "company": "Bourne",
-    "email": "Grace@gmail.com"
-  },
-  {
-    "name": "Daniel Jones",
-    "company": "CoolersORG",
-    "email": "blackhole@gmail.com"
   }
 ]
