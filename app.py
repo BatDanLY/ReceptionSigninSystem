@@ -189,13 +189,11 @@ if __name__ == '__main__':
     app.config['SCHEDULER_API_ENABLED'] = True
     scheduler.init_app(app)
 
-    @scheduler.task('cron', id='do_sign_out_all_users', hour=19, minute=58)
+    @scheduler.task('cron', id='do_sign_out_all_users', hour=00, minute=00)
     def scheduled_sign_out():
         with app.app_context():
             sign_out_all_users()
 
-
-    print(datetime.now())
     scheduler.start()
 
     app.run(debug=False, host='0.0.0.0', port=5000)
