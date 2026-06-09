@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8695e5ec-5b32-48fb-a653-75c569702809" name="Changes" comment="Initial Commit">
+    <list default="true" id="8695e5ec-5b32-48fb-a653-75c569702809" name="Changes" comment="Added Run Configuration to Project">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/currently_signed_in.json" beforeDir="false" afterPath="$PROJECT_DIR$/currently_signed_in.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,79 +30,79 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "BatDanLY"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;BatDanLY&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/BatDanLY/ReceptionSigninSystem.git",
-    "accountId": "8d888c59-a642-4a31-9ba3-c04ef58f7b87"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/BatDanLY/ReceptionSigninSystem.git&quot;,
+    &quot;accountId&quot;: &quot;8d888c59-a642-4a31-9ba3-c04ef58f7b87&quot;
   }
-}]]></component>
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0001375390136076" />
-      <entry key="S2" value="1.1952925719502967" />
-      <entry key="S5" value="2.495158084142959" />
-      <entry key="S10" value="4.733451060748919" />
-      <entry key="S30" value="8.552045730209512" />
-      <entry key="S60" value="10.46819212716815" />
-      <entry key="M2" value="12.848701870799" />
-      <entry key="M5" value="16.371475738814766" />
-      <entry key="M10" value="18.452504934834586" />
-      <entry key="M15" value="19.71202934965108" />
-      <entry key="M30" value="23.207098845570332" />
-      <entry key="H1" value="28.06492336350771" />
-      <entry key="H2" value="32.41513671634031" />
-      <entry key="H4" value="35.36481072206673" />
-      <entry key="D1" value="38.33995071694979" />
-      <entry key="W1" value="38.904284992732514" />
+      <entry key="MS100" value="1.0016563441690898" />
+      <entry key="MS500" value="1.3897381359021228" />
+      <entry key="S2" value="3.6139448973445085" />
+      <entry key="S5" value="6.603150924324529" />
+      <entry key="S10" value="8.731331140060213" />
+      <entry key="S30" value="11.060445739599038" />
+      <entry key="S60" value="12.665071097556037" />
+      <entry key="M2" value="15.932479561603692" />
+      <entry key="M5" value="22.52134167040397" />
+      <entry key="M10" value="27.129801918700768" />
+      <entry key="M15" value="29.512655372942888" />
+      <entry key="M30" value="34.25259482054288" />
+      <entry key="H1" value="39.862817983884774" />
+      <entry key="H2" value="44.71528510498593" />
+      <entry key="H4" value="47.981521470177306" />
+      <entry key="D1" value="51.2704657952378" />
+      <entry key="W1" value="51.8942067562169" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="4.135711807117275E-165" />
-      <entry key="S2" value="8.019320428262066E-42" />
-      <entry key="S5" value="3.644643268918991E-17" />
-      <entry key="S10" value="6.037088096855125E-9" />
-      <entry key="S30" value="0.0018208569905227715" />
-      <entry key="S60" value="0.042671500917155124" />
-      <entry key="M2" value="0.20657081332355517" />
-      <entry key="M5" value="0.5321420566639343" />
-      <entry key="M10" value="0.7294806760044669" />
-      <entry key="M15" value="0.8103560171826454" />
-      <entry key="M30" value="0.9001977655952301" />
-      <entry key="H1" value="0.948787523945815" />
-      <entry key="H2" value="0.9740572488030744" />
-      <entry key="H4" value="0.9869433868277722" />
-      <entry key="D1" value="0.9978119639099735" />
-      <entry key="W1" value="0.9996871299057061" />
+      <entry key="MS500" value="1.9245222775202912E-299" />
+      <entry key="S2" value="2.0945017891192064E-75" />
+      <entry key="S5" value="1.3441022072107395E-30" />
+      <entry key="S10" value="1.1593542199046571E-15" />
+      <entry key="S30" value="1.0505225577028953E-5" />
+      <entry key="S60" value="0.0032411765729483074" />
+      <entry key="M2" value="0.05693133208478707" />
+      <entry key="M5" value="0.3177902277429995" />
+      <entry key="M10" value="0.5637288601295833" />
+      <entry key="M15" value="0.6824122999965169" />
+      <entry key="M30" value="0.8260825019309608" />
+      <entry key="H1" value="0.9088908085853666" />
+      <entry key="H2" value="0.9533576498803403" />
+      <entry key="H4" value="0.9764003532774553" />
+      <entry key="D1" value="0.9960274816356631" />
+      <entry key="W1" value="0.9994315288160756" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9726549474122855" />
-      <entry key="MS500" value="0.9946071183348403" />
-      <entry key="S2" value="1.1936331942921257" />
-      <entry key="S5" value="2.4936655078373775" />
-      <entry key="S10" value="4.731971560015541" />
-      <entry key="S30" value="8.552869934683658" />
-      <entry key="S60" value="10.509310613224462" />
-      <entry key="M2" value="13.05251222183057" />
-      <entry key="M5" value="16.900943380607785" />
-      <entry key="M10" value="19.180171215252386" />
-      <entry key="M15" value="20.52104228012642" />
-      <entry key="M30" value="24.106543230787324" />
-      <entry key="H1" value="29.01330662620574" />
-      <entry key="H2" value="33.38898299121167" />
-      <entry key="H4" value="36.35164603121214" />
-      <entry key="D1" value="39.3377442664029" />
-      <entry key="W1" value="39.90396948154678" />
+      <entry key="MS100" value="0.9675362689577458" />
+      <entry key="MS500" value="1.3802438567943112" />
+      <entry key="S2" value="3.6079695397522946" />
+      <entry key="S5" value="6.5987400239645515" />
+      <entry key="S10" value="8.728370514756001" />
+      <entry key="S30" value="11.059182320410166" />
+      <entry key="S60" value="12.667505378871912" />
+      <entry key="M2" value="15.988288760666219" />
+      <entry key="M5" value="22.83738561924632" />
+      <entry key="M10" value="27.692053254276175" />
+      <entry key="M15" value="30.193886190808445" />
+      <entry key="M30" value="35.077960649999355" />
+      <entry key="H1" value="40.77130884682633" />
+      <entry key="H2" value="45.668429916489636" />
+      <entry key="H4" value="48.95781172489427" />
+      <entry key="D1" value="52.26647436590337" />
+      <entry key="W1" value="52.8936355689766" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -111,32 +113,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Flask server.Flask (app.py).executor": "Run",
-    "Flask server.HolscotSignin.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.HolscotSignin.executor": "Run",
-    "Python.app.executor": "Run",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/programming2/python/HolscotSignin/static",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "show.migrate.to.gradle.popup": "false",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Flask server.Flask (app.py).executor&quot;: &quot;Run&quot;,
+    &quot;Flask server.HolscotSignin.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.HolscotSignin.executor&quot;: &quot;Run&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/programming2/python/HolscotSignin/static&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\programming2\python\HolscotSignin\static" />
@@ -163,7 +165,8 @@
       <workItem from="1771780493961" duration="604000" />
       <workItem from="1774691538349" duration="82000" />
       <workItem from="1781026776537" duration="1437000" />
-      <workItem from="1781031833812" duration="449000" />
+      <workItem from="1781031833812" duration="542000" />
+      <workItem from="1781032717236" duration="1969000" />
     </task>
     <task id="LOCAL-00001" summary="Inital working">
       <option name="closed" value="true" />
@@ -205,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1781032129826</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added Run Configuration to Project">
+      <option name="closed" value="true" />
+      <created>1781032347447</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1781032347447</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,11 +226,12 @@
     <MESSAGE value="Inital working" />
     <MESSAGE value="test brantch" />
     <MESSAGE value="Initial Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+    <MESSAGE value="Added Run Configuration to Project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Run Configuration to Project" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HolscotSignin$HolscotSignin.coverage" NAME="HolscotSignin Coverage Results" MODIFIED="1781031354725" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/HolscotSignin$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1781031309074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/ReceptionSigninSystem$app.coverage" NAME="app Coverage Results" MODIFIED="1781032033369" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/ReceptionSigninSystem$app.coverage" NAME="app Coverage Results" MODIFIED="1781033698588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
