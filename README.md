@@ -1,4 +1,4 @@
-# 📥 Reception Sign-In System
+# Reception Sign-In System
 
 A Flask web application that allows visitors to businesses, schools, offices, and other buildings to easily sign in and out while maintaining a record of current visitors. The system also remembers previous visitors, allowing frequent visitors to sign in more quickly using autocomplete.
 
