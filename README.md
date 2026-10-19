@@ -65,4 +65,4 @@ JavaScript must be enabled for autocomplete and other interactive features to fu
 
 ## License
 
-MIT License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
